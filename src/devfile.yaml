@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: devspaces-nodejs
+  name: demo-devspaces
   language: "JavaScript"
   projectType: "Node.js"
 components:
