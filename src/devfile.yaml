@@ -1,0 +1,106 @@
+schemaVersion: 2.2.0
+metadata:
+  name: devspaces-nodejs
+  language: "JavaScript"
+  projectType: "Node.js"
+components:
+  - name: runtime
+    container:
+      image: registry.redhat.io/devspaces/udi-rhel8
+      command: ["tail", "-f", "/dev/null"]
+      memoryLimit: 512Mi
+      cpuLimit: 500m
+      sourceMapping: /projects
+      mountSources: true
+      endpoints:
+        - name: https-node
+          targetPort: 3000
+          protocol: https
+        - exposure: none
+          name: debug
+          targetPort: 9229
+      volumeMounts:
+        - name: app-cache
+          path: ${PROJECT_SOURCE}/node-modules
+      env:
+        - name: NODE_ENV
+          value: development
+        - name: PORT
+          value: "3000"
+  - name: app-cache
+    volume:
+      size: 1Gi
+commands:
+  - id: lint
+    exec:
+      component: runtime
+      commandLine: npm run lint
+      workingDir: ${PROJECT_SOURCE}/src
+      group:
+        kind: build
+
+  - id: run-debug
+    exec:
+      component: runtime
+      commandLine: node --inspect=0.0.0.0:9229 index.js
+      workingDir: ${PROJECT_SOURCE}/src
+      group:
+        kind: run
+
+  - id: start-with-nodemon
+    exec:
+      component: runtime
+      commandLine: npm run nodemon
+      workingDir: ${PROJECT_SOURCE}/src
+      group:
+        kind: run
+  
+  - id: format
+    exec:
+      component: runtime
+      commandLine: npm run format
+  
+  - id: install-dependencies
+    exec:
+      component: runtime
+      commandLine: npm install
+      workingDir: ${PROJECT_SOURCE}/src
+      group:
+        kind: build
+        isDefault: true
+    
+  - id: run
+    exec:
+      component: runtime
+      commandLine: node index.js
+      workingDir: ${PROJECT_SOURCE}/src
+      group:
+        kind: run
+        isDefault: true
+
+  - id: deploy
+    exec:
+      component: runtime
+      commandLine: npm run openshift
+      workingDir: ${PROJECT_SOURCE}/src
+      group:
+        kind: deploy
+        isDefault: true
+
+  - id: test
+    exec:
+      component: runtime
+      commandLine: ls -la
+      workingDir: ${PROJECT_SOURCE}
+
+  - id: prestart-setup
+    composite:
+      commands:
+        - install-dependencies        
+      parallel: false
+  
+  - id: poststart-setup
+    composite:
+      commands:
+        - run
+      parallel: false
