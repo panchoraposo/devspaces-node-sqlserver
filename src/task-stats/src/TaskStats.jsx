@@ -12,9 +12,11 @@ const TaskStats = () => {
 
   // Función para obtener las estadísticas
   useEffect(() => {
+    console.log("Cargando estadísticas..."); // Agrega un log para confirmar que se llama al useEffect
     const fetchStats = async () => {
       try {
         const response = await axios.get("http://localhost:3000/tasks/stats");
+        console.log("Estadísticas recibidas:", response.data); // Verifica los datos recibidos
         setStats(response.data);
         setLoading(false);
       } catch (error) {
@@ -28,13 +30,13 @@ const TaskStats = () => {
 
   // Configuración del gráfico
   const data = {
-    labels: ["Completadas", "Pendientes"], // Etiquetas de las porciones
+    labels: ["Completadas", "Pendientes"],
     datasets: [
       {
         label: "Estadísticas de Tareas",
-        data: [stats.completedTasks, stats.pendingTasks], // Datos de las tareas
-        backgroundColor: ["#4caf50", "#ff9800"], // Colores actualizados (verde y naranja)
-        borderColor: ["#388e3c", "#f57c00"], // Bordes del gráfico
+        data: [stats.completedTasks, stats.pendingTasks],
+        backgroundColor: ["#4caf50", "#ff9800"],
+        borderColor: ["#388e3c", "#f57c00"],
         borderWidth: 2,
       },
     ],
@@ -49,7 +51,6 @@ const TaskStats = () => {
         text: "Estadísticas de Tareas",
       },
     },
-    // Tamaño más pequeño
     maintainAspectRatio: false,
     aspectRatio: 1,
   };

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microfrontend Container</title>
+  <style>
+    /* Contenedor para alinear los iframes horizontalmente */
+    .iframe-container {
+      display: flex;
+      justify-content: center;  /* Espaciado entre los iframes */
+      align-items: center;
+      gap: 15px;  /* Espacio entre los iframes */
+      margin-top: 20px;  /* Un poco de margen en la parte superior */
+    }
+
+    /* Estilos para los iframes */
+    iframe {
+      width: 50%;  /* Ajusta el tamaño de los iframes (45% de ancho) */
+      height: 500px;  /* Ajusta la altura de los iframes */
+      border: 1px solid gray;  /* Borde para los iframes */
+    }
+  </style>
+</head>
+<body>
+  <h1>Microfrontend Container</h1>
+
+  <!-- Contenedor de los iframes -->
+  <div class="iframe-container">
+    <iframe
+      title="Task List"
+      src="http://localhost:5173"
+    ></iframe>
+    <iframe
+      title="Task Stats"
+      src="http://localhost:5174"
+    ></iframe>
+  </div>
+</body>
+</html>
