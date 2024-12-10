@@ -5,10 +5,11 @@ function TaskList() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     console.log('Cargando tareas...');
-    fetch('http://localhost:3000/tasks')
+    fetch(backendUrl + '/tasks')
       .then(response => response.json())
       .then(data => {
         console.log('Tareas recibidas:', data);
@@ -56,7 +57,7 @@ function TaskList() {
   );
 
   function handleToggleComplete(id, completed) {
-    fetch(`http://localhost:3000/tasks/${id}`, {
+    fetch(backendUrl + `/tasks/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ completed: !completed }),

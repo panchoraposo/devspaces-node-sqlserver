@@ -39,7 +39,7 @@ async function initDatabase() {
         // Conecta al servidor (sin especificar base de datos)
         pool = await sql.connect(masterConfig);
         
-        console.log('Connecting to credicorp database...');
+        console.log('Connecting to database...');
         pool = await sql.connect(dbConfig);
 
         console.log('Checking and creating tables...');

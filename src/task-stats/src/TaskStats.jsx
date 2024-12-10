@@ -9,13 +9,14 @@ ChartJS.register(Title, ArcElement, Tooltip, Legend);
 const TaskStats = () => {
   const [stats, setStats] = useState({ completedTasks: 0, pendingTasks: 0 });
   const [loading, setLoading] = useState(true);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Función para obtener las estadísticas
   useEffect(() => {
     console.log("Cargando estadísticas..."); // Agrega un log para confirmar que se llama al useEffect
     const fetchStats = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/tasks/stats");
+        const response = await axios.get(backendUrl + "/tasks/stats");
         console.log("Estadísticas recibidas:", response.data); // Verifica los datos recibidos
         setStats(response.data);
         setLoading(false);

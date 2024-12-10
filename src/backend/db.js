@@ -16,11 +16,10 @@ let pool;
 async function getDbPool() {
     if (!pool) {
         try {
-            console.log('Connecting to the database...');
-            pool = await sql.connect(dbConfig); // Establece la conexión
+            pool = await sql.connect(dbConfig);
         } catch (err) {
             console.error('Error connecting to the database:', err);
-            throw err; // Asegúrate de lanzar el error si la conexión falla
+            throw err;
         }
     }
     return pool;
