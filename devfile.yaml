@@ -31,6 +31,13 @@ components:
     volume:
       size: 1Gi
 commands:
+  - id: 1-backend
+    exec:
+      component: runtime
+      commandLine: npm run start
+      workingDir: ${PROJECT_SOURCE}/src/backend
+      group:
+        kind: build
   - id: lint
     exec:
       component: runtime
