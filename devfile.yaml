@@ -45,76 +45,46 @@ commands:
       workingDir: ${PROJECT_SOURCE}/src/backend
       group:
         kind: build
-  - id: lint
-    exec:
-      component: runtime
-      commandLine: npm run lint
-      workingDir: ${PROJECT_SOURCE}/src
-      group:
-        kind: build
-
-  - id: run-debug
-    exec:
-      component: runtime
-      commandLine: node --inspect=0.0.0.0:9229 index.js
-      workingDir: ${PROJECT_SOURCE}/src
-      group:
-        kind: run
-
-  - id: start-with-nodemon
-    exec:
-      component: runtime
-      commandLine: npm run nodemon
-      workingDir: ${PROJECT_SOURCE}/src
-      group:
-        kind: run
-  
-  - id: format
-    exec:
-      component: runtime
-      commandLine: npm run format
-  
-  - id: install-dependencies
+  - id: 3-task-list-install
     exec:
       component: runtime
       commandLine: npm install
-      workingDir: ${PROJECT_SOURCE}/src
+      workingDir: ${PROJECT_SOURCE}/src/task-list
       group:
         kind: build
-        isDefault: true
-    
-  - id: run
+  - id: 4-task-list-start
     exec:
       component: runtime
-      commandLine: node index.js
-      workingDir: ${PROJECT_SOURCE}/src
+      commandLine: npm run dev
+      workingDir: ${PROJECT_SOURCE}/src/task-list
       group:
-        kind: run
-        isDefault: true
-
-  - id: deploy
+        kind: build
+  - id: 5-task-stats-install
     exec:
       component: runtime
-      commandLine: npm run openshift
-      workingDir: ${PROJECT_SOURCE}/src
+      commandLine: npm install
+      workingDir: ${PROJECT_SOURCE}/src/task-stats
       group:
-        kind: deploy
-        isDefault: true
-
-  - id: test
+        kind: build
+  - id: 6-task-stats-start
     exec:
       component: runtime
-      commandLine: ls -la
-      workingDir: ${PROJECT_SOURCE}
-
-  - id: prestart-setup
-    composite:
-      commands:
-        - install-dependencies        
-      parallel: false
+      commandLine: npm run dev
+      workingDir: ${PROJECT_SOURCE}/src/task-stats
+      group:
+        kind: build
+  - id: 7-microfrontend-container-install
+    exec:
+      component: runtime
+      commandLine: npm install
+      workingDir: ${PROJECT_SOURCE}/src/microfrontend-container
+      group:
+        kind: build
+  - id: 8-microfrontend-container-start
+    exec:
+      component: runtime
+      commandLine: npm run dev
+      workingDir: ${PROJECT_SOURCE}/src/microfrontend-container
+      group:
+        kind: build
   
-  - id: poststart-setup
-    composite:
-      commands:
-        - run
-      parallel: false
