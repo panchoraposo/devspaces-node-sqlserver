@@ -31,7 +31,14 @@ components:
     volume:
       size: 1Gi
 commands:
-  - id: 1-backend
+  - id: 1-backend-install
+    exec:
+      component: runtime
+      commandLine: npm install
+      workingDir: ${PROJECT_SOURCE}/src/backend
+      group:
+        kind: build
+  - id: 2-backend-start
     exec:
       component: runtime
       commandLine: npm run start
