@@ -1,4 +1,6 @@
 const sql = require('mssql');
+const path = require('path');
+const fs = require('fs');
 
 // Configuración de SQL Server
 const masterConfig = {
@@ -15,7 +17,7 @@ const masterConfig = {
 
 const dbConfig = {
     ...masterConfig,
-    database: 'credicorp',
+    database: process.env.DB_DATABASE,
 };
 
 const createTablesScript = `
@@ -31,6 +33,8 @@ BEGIN
 END;
 `;
 
+const insertData = fs.readFileSync(path.join(__dirname, './sql/demo.sql')).toString();
+
 async function initDatabase() {
     let pool;
 
@@ -45,7 +49,15 @@ async function initDatabase() {
         console.log('Checking and creating tables...');
         await pool.request().query(createTablesScript);
 
-        console.log('Database and tables are ready.');
+        console.log('Checking if demo data needs to be inserted...');
+        const result = await pool.request().query('SELECT COUNT(*) AS count FROM Tasks');
+        if (result.recordset[0].count === 0) {
+            console.log('Table is empty. Inserting demo data...');
+            await pool.request().query(insertData);
+            console.log('Demo data inserted successfully.');
+        } else {
+            console.log('Demo data already exists. No insertion performed.');
+        }
     } catch (err) {
         console.error('Error initializing database:', err);
     } finally {
