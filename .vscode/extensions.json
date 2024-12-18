@@ -3,7 +3,7 @@
         "redhat.vscode-openshift-connector",
         "dbaeumer.vscode-eslint",
         "redhat.vscode-yaml",
-        "cweijan.dbclient-jdbc",
+        "ms-mssql.mssql",
         "ms-azuretools.vscode-apimanagement"
     ]
 }
