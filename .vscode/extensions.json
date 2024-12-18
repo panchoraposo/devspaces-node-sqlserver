@@ -2,8 +2,6 @@
     "recommendations": [
         "redhat.vscode-openshift-connector",
         "dbaeumer.vscode-eslint",
-        "redhat.vscode-yaml",
-        "ms-mssql.mssql",
-        "ms-azuretools.vscode-apimanagement"
+        "redhat.vscode-yaml"
     ]
 }
