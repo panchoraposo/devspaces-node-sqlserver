@@ -8,6 +8,7 @@ function TaskList() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
+    console.log(backendUrl);
     console.log('Cargando tareas...');
     fetch(backendUrl + '/tasks')
       .then(response => response.json())
